@@ -1,5 +1,5 @@
 # TODO: Use beautiful soup module
-# TODO: Use pandas
+# TODO: Use pandas module
 
 import time
 import webbrowser
