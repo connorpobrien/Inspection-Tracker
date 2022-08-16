@@ -39,7 +39,7 @@ def get_html(page_url):
     :return: html content on page
     """
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36"}
-    page = requests.get(url, headers=headers)
+    page = requests.get(page_url, headers=headers)
     return page.content
 
 
@@ -50,7 +50,8 @@ def inspection_available(page_html):
     :return: True is inspection is available
     """
     soup = BeautifulSoup(page_html, 'html.parser')
-    inspection_status = soup.findAll
+    inspection_status = soup.findAll("option", {"value": "09/24/2022"})
+    return len(inspection_status) == 0
 
 def notify(email):
     """
@@ -61,8 +62,8 @@ def notify(email):
 
 
 def main():
-    print(get_html('https://sjpermits.org/permits/ir/detail_5.asp?PageUrl=../common/inspections.asp&peoplersn=682965&PageDescription=Return%20to%20list%20of%20permits&folderrsn=1979438'))
-
+    page_html = get_html("https://sjpermits.org/permits/ir/detail_5.asp?PageUrl=../common/inspections.asp&peoplersn=682965&PageDescription=Return%20to%20list%20of%20permits&folderrsn=1979438")
+    print(inspection_available(page_html))
 
 if __name__ == '__main__':
     main()
