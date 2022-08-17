@@ -16,7 +16,41 @@ import requests
 s = Service('/usr/local/bin/chromedriver')
 
 
-def refresh_page(page, seconds, xpath):
+def load_page_and_sign_in(page_url, login_1, login_2):
+    """
+    :param page_url: url of website
+    :param login_1: login phrase for 1st sign in page
+    :param login_2: login phrase for 2nd sign in page
+    :return: loads inspection webpage using selenium and logs in
+    """
+    # load SJ building department inspection website
+    driver = webdriver.Chrome(service=s)
+    driver.get(page_url)
+
+    # input login phrase for 1st page and click enter
+    first_input = driver.find_element(By.ID, 'cin')
+    first_input.send_keys(login_1)
+    enter_button = driver.find_element(By.NAME, 'enter')
+    enter_button.click()
+
+    # click continue on second page
+    continue_button = driver.find_element(By.XPATH, '//*[@id="container"]/table/tbody/tr/td/table/tbody/tr[2]/td/form/input[2]')
+    continue_button.click()
+
+    # confirm box on third page and click submit
+    confirm_box = driver.find_element(By.ID, 'Confirmation')
+    confirm_box.click()
+    submit_button = driver.find_element(By.NAME, 'B1')
+    submit_button.click()
+
+    # input login phrase for 2nd page and click 'search'
+    permit_box = driver.find_element(By.NAME, 'permitnum')
+    permit_box.send_keys(login_2)
+    search_button = driver.find_element(By.XPATH, '//*[@id="container"]/table/tbody/tr/td/form/font/font/table/tbody/tr[3]/td/p/input')
+    search_button.click()
+
+
+def refresh_page(page, seconds):
     """
     :param page: link to site -> str
     :param seconds: how often to reload page -> int
@@ -30,7 +64,6 @@ def refresh_page(page, seconds, xpath):
     while num_reloads > 0:
         time.sleep(seconds)
         driver.refresh()
-        driver.find_element(By.XPATH, xpath).click()
 
 
 def get_html(page_url):
@@ -50,7 +83,7 @@ def inspection_available(page_html):
     :return: True is inspection is available
     """
     soup = BeautifulSoup(page_html, 'html.parser')
-    inspection_status = soup.findAll("option", {"value": "09/24/2022"})
+    inspection_status = soup.findAll("option", {"value": ""})
     return len(inspection_status) == 0
 
 def notify(email):
@@ -62,8 +95,13 @@ def notify(email):
 
 
 def main():
-    page_html = get_html("https://sjpermits.org/permits/ir/detail_5.asp?PageUrl=../common/inspections.asp&peoplersn=682965&PageDescription=Return%20to%20list%20of%20permits&folderrsn=1979438")
-    print(inspection_available(page_html))
+    url = 'https://sjpermits.org/permits/general/scheduleinspection.asp'
+    username = input("Enter the website url: ")
+    password = "2022" + username
+
+
+
+
 
 if __name__ == '__main__':
     main()
