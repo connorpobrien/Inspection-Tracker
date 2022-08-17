@@ -16,6 +16,10 @@ import requests
 s = Service('/usr/local/bin/chromedriver')
 
 
+# define driver
+driver = webdriver.Chrome(service=s)
+
+
 def load_page_and_sign_in(page_url, login_1, login_2):
     """
     :param page_url: url of website
@@ -24,7 +28,6 @@ def load_page_and_sign_in(page_url, login_1, login_2):
     :return: loads inspection webpage using selenium and logs in
     """
     # load SJ building department inspection website
-    driver = webdriver.Chrome(service=s)
     driver.get(page_url)
 
     # input login phrase for 1st page and click enter
@@ -50,20 +53,17 @@ def load_page_and_sign_in(page_url, login_1, login_2):
     search_button.click()
 
 
-def refresh_page(page, seconds):
+def refresh_page(seconds):
     """
-    :param page: link to site -> str
+    :param driver: driver from 'load_page' function
     :param seconds: how often to reload page -> int
     :return: uses selenium to reload designated chrome page
     """
-    driver = webdriver.Chrome(service=s)
-    driver.get(page)
+    # driver = webdriver.Chrome(service=s)
 
-    # infinite loop to reload page and search for
-    num_reloads = 1
-    while num_reloads > 0:
-        time.sleep(seconds)
-        driver.refresh()
+    # infinite loop to reload page
+    time.sleep(seconds)
+    driver.refresh()
 
 
 def get_html(page_url):
@@ -96,11 +96,11 @@ def notify(email):
 
 def main():
     url = 'https://sjpermits.org/permits/general/scheduleinspection.asp'
-    username = input("Enter the website url: ")
+    username = input("Enter the permit number: ")
     password = "2022" + username
+    load_page_and_sign_in(url, username, password)
 
-
-
+    refresh_page(3)
 
 
 if __name__ == '__main__':
