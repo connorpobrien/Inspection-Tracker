@@ -1,6 +1,3 @@
-# TODO: Use beautiful soup module
-# TODO: Use pandas module
-
 import time
 import webbrowser
 
@@ -12,22 +9,18 @@ from bs4 import BeautifulSoup
 import requests
 
 # set location to the location of the webdriver
-# XPATH -> //*[@id="cmbscheduledDate"]
 s = Service('/usr/local/bin/chromedriver')
 
 
-# define driver
-driver = webdriver.Chrome(service=s)
-
-
-def load_page_and_sign_in(page_url, login_1, login_2):
+def load_page_and_sign_in(page_url, login_1, login_2, driver):
     """
+    Loads SJ building department website and signs in to inspection page
     :param page_url: url of website
     :param login_1: login phrase for 1st sign in page
     :param login_2: login phrase for 2nd sign in page
     :return: loads inspection webpage using selenium and logs in
     """
-    # load SJ building department inspection website
+    # load website
     driver.get(page_url)
 
     # input login phrase for 1st page and click enter
@@ -53,15 +46,13 @@ def load_page_and_sign_in(page_url, login_1, login_2):
     search_button.click()
 
 
-def refresh_page(seconds):
+def refresh_page(seconds, driver):
     """
     :param driver: driver from 'load_page' function
     :param seconds: how often to reload page -> int
     :return: uses selenium to reload designated chrome page
     """
-    # driver = webdriver.Chrome(service=s)
 
-    # infinite loop to reload page
     time.sleep(seconds)
     driver.refresh()
 
@@ -76,15 +67,21 @@ def get_html(page_url):
     return page.content
 
 
-def inspection_available(page_html):
+def inspection_available(driver, month_date, day_date):
     """
-    checks whether an inspection is available
-    :param page_html: html contents of website
-    :return: True is inspection is available
+    :param driver:
+    :param month_date:
+    :param day_date:
+    :return:
     """
-    soup = BeautifulSoup(page_html, 'html.parser')
-    inspection_status = soup.findAll("option", {"value": ""})
-    return len(inspection_status) == 0
+    page_source = driver.pagesource
+    soup = BeautifulSoup(page_source, 'lxml')
+
+    # use beautiful soup to search page for date
+    # return true is found, false if not
+    
+
+    # https://medium.com/ymedialabs-innovation/web-scraping-using-beautiful-soup-and-selenium-for-dynamic-page-2f8ad15efe25
 
 def notify(email):
     """
@@ -95,12 +92,15 @@ def notify(email):
 
 
 def main():
+    # define driver (global)
+    global_driver = webdriver.Chrome(service=s)
+
     url = 'https://sjpermits.org/permits/general/scheduleinspection.asp'
     username = input("Enter the permit number: ")
     password = "2022" + username
-    load_page_and_sign_in(url, username, password)
+    load_page_and_sign_in(url, username, password, global_driver)
 
-    refresh_page(3)
+    refresh_page(3, global_driver)
 
 
 if __name__ == '__main__':
