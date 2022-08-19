@@ -79,6 +79,7 @@ def inspection_available(driver, month_date, day_date):
 
     # use beautiful soup to search page for date
     # return true is found, false if not
+    # yes sir
     
 
     # https://medium.com/ymedialabs-innovation/web-scraping-using-beautiful-soup-and-selenium-for-dynamic-page-2f8ad15efe25
