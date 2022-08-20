@@ -62,6 +62,7 @@ def get_html(page_url):
     :param url: url of a website
     :return: html content on page
     """
+    pass
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36"}
     page = requests.get(page_url, headers=headers)
     return page.content
@@ -74,20 +75,20 @@ def inspection_available(driver, month_date, day_date):
     :param day_date:
     :return:
     """
-    page_source = driver.pagesource
-    soup = BeautifulSoup(page_source, 'lxml')
+    # page_source = driver.pagesource
+    # soup = BeautifulSoup(page_source, 'lxml')
 
     # use beautiful soup to search page for date
     # return true is found, false if not
     # yes sir
+    pass
     
 
     # https://medium.com/ymedialabs-innovation/web-scraping-using-beautiful-soup-and-selenium-for-dynamic-page-2f8ad15efe25
 
-def notify(email):
+def play_duration():
     """
-    :param email: email address of recipient
-    :return: sends email to address if search_page is found to be true
+    Plays sound from computer speakers
     """
     pass
 
@@ -99,9 +100,22 @@ def main():
     url = 'https://sjpermits.org/permits/general/scheduleinspection.asp'
     username = input("Enter the permit number: ")
     password = "2022" + username
+    permit_month = input("Enter the month of the permit that you are waiting for: ")
+    permit_day = input("Enter the day of the permit that you are waiting for: ")
+
+    # define driver (global)
+    global_driver = webdriver.Chrome(service=s)
+
+    # load webpage and get to inspection page
     load_page_and_sign_in(url, username, password, global_driver)
 
-    refresh_page(3, global_driver)
+
+    # play sound if inspection is available
+    if inspection_available(global_driver, permit_month, permit_day):
+        # play sound
+
+    while not inspection_available(global_driver, permit_month, permit_day):
+        refresh_page(3, global_driver)
 
 
 if __name__ == '__main__':
