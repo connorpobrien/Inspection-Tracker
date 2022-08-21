@@ -8,6 +8,9 @@ from selenium.webdriver.chrome.service import Service
 from bs4 import BeautifulSoup
 import requests
 
+import html5lib
+import lxml
+
 # set location to the location of the webdriver
 s = Service('/usr/local/bin/chromedriver')
 
@@ -52,49 +55,34 @@ def refresh_page(seconds, driver):
     :param seconds: how often to reload page -> int
     :return: uses selenium to reload designated chrome page
     """
-
     time.sleep(seconds)
     driver.refresh()
 
 
-def get_html(page_url):
-    """
-    :param page_url: url of a website
-    :return: html content on page
-    """
-    pass
-    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36"}
-    page = requests.get(page_url, headers=headers)
-    return page.content
-
-
-def inspection_available(driver, month_date, day_date):
+def inspection_available(driver, inspection_date, type_of_inspection):
     """
     :param driver:
-    :param month_date:
-    :param day_date:
+    :param inspection_date:
+    :param type_of_inspection:
     :return:
     """
-    page_source = requests.get(driver.current_url)
-    soup = BeautifulSoup(page_source.content, "html.parser")
 
-    print(soup)
+    # retrieve html of whole page
+    html = driver.page_source
+    soup = BeautifulSoup(html, "html.parser")
 
-    content = soup.find_all('td', class_='menu')
+    inspection_type = "MyForm" + type_of_inspection[0].upper()
 
-    print(content)
+    content = soup.find_all('form', attrs={'name': inspection_type})
 
-    # dates = []
-    # date_selector = soup.find_all('span', select_='cmbscheduledDate')
-    #
-    # for i in date_selector:
-    #     dates.append(i)
-    #
-    # return dates
+    string_content = str(content)
+
+    if inspection_date in string_content:
+        return True
+    return False
 
 
-
-def play_duration():
+def play_alert():
     """
     Plays sound from computer speakers
     """
@@ -107,8 +95,14 @@ def main():
     url = 'https://sjpermits.org/permits/general/scheduleinspection.asp'
     username = input("Enter the permit number: ")
     password = "2022" + username
-    permit_month = input("Enter the month of the permit that you are waiting for: ")
-    permit_day = input("Enter the day of the permit that you are waiting for: ")
+    print('-----------------------')
+    type_of_inspection = input("Enter the type of inspection that you are looking for (Building, Electrical, "
+                               "Plumbing/Mechanical, Fire, Hazmat): ")
+    print('-----------------------')
+    inspection_date = input("Enter the date of the permit that you are waiting for (Ex: 09/10/2022): ")
+    print('-----------------------')
+    print("Alarm will sound if inspection is available.")
+    print('-----------------------')
 
     # define driver (global)
     global_driver = webdriver.Chrome(service=s)
@@ -116,9 +110,15 @@ def main():
     # load webpage and get to inspection page
     load_page_and_sign_in(url, username, password, global_driver)
 
-    time.sleep(2)
-
-    inspection_available(global_driver, permit_month, permit_day)
+    continue_searching = True
+    while continue_searching:
+        if inspection_available(global_driver, inspection_date, type_of_inspection):
+            print("Inspection found on date inputted!")
+            continue_searching = False
+        else:
+            print("Still searching!")
+            print("-----------------")
+            refresh_page(2, global_driver)
 
 
 if __name__ == '__main__':
