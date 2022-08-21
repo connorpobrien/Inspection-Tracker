@@ -75,16 +75,24 @@ def inspection_available(driver, month_date, day_date):
     :param day_date:
     :return:
     """
-    # page_source = driver.pagesource
-    # soup = BeautifulSoup(page_source, 'lxml')
+    page_source = requests.get(driver.current_url)
+    soup = BeautifulSoup(page_source.content, "html.parser")
 
-    # use beautiful soup to search page for date
-    # return true is found, false if not
-    # yes sir
-    pass
-    
+    print(soup)
 
-    # https://medium.com/ymedialabs-innovation/web-scraping-using-beautiful-soup-and-selenium-for-dynamic-page-2f8ad15efe25
+    content = soup.find_all('td', class_='menu')
+
+    print(content)
+
+    # dates = []
+    # date_selector = soup.find_all('span', select_='cmbscheduledDate')
+    #
+    # for i in date_selector:
+    #     dates.append(i)
+    #
+    # return dates
+
+
 
 def play_duration():
     """
@@ -94,9 +102,8 @@ def play_duration():
 
 
 def main():
-    # define driver (global)
-    global_driver = webdriver.Chrome(service=s)
 
+    # get all necessary info from user input
     url = 'https://sjpermits.org/permits/general/scheduleinspection.asp'
     username = input("Enter the permit number: ")
     password = "2022" + username
@@ -109,13 +116,9 @@ def main():
     # load webpage and get to inspection page
     load_page_and_sign_in(url, username, password, global_driver)
 
+    time.sleep(2)
 
-    # play sound if inspection is available
-    if inspection_available(global_driver, permit_month, permit_day):
-        # play sound
-
-    while not inspection_available(global_driver, permit_month, permit_day):
-        refresh_page(3, global_driver)
+    inspection_available(global_driver, permit_month, permit_day)
 
 
 if __name__ == '__main__':
