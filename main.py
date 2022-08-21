@@ -59,7 +59,7 @@ def refresh_page(seconds, driver):
 
 def get_html(page_url):
     """
-    :param url: url of a website
+    :param page_url: url of a website
     :return: html content on page
     """
     pass
