@@ -1,15 +1,14 @@
 import time
 import webbrowser
+import os
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 
 from bs4 import BeautifulSoup
-import requests
 
-import html5lib
-import lxml
+from pygame import mixer
 
 # set location to the location of the webdriver
 s = Service('/usr/local/bin/chromedriver')
@@ -71,12 +70,16 @@ def inspection_available(driver, inspection_date, type_of_inspection):
     html = driver.page_source
     soup = BeautifulSoup(html, "html.parser")
 
+    # format inspection type variable (str)
     inspection_type = "MyForm" + type_of_inspection[0].upper()
 
+    # narrow down html
     content = soup.find_all('form', attrs={'name': inspection_type})
 
+    # convert content to string to easily parse
     string_content = str(content)
 
+    # return True if date is available
     if inspection_date in string_content:
         return True
     return False
@@ -86,11 +89,37 @@ def play_alert():
     """
     Plays sound from computer speakers
     """
-    pass
+    mixer.init()
+    sound = mixer.Sound("mixkit-classic-alarm-995.wav")
+    sound.play()
 
 
 def main():
+    # define driver (global)
+    global_driver = webdriver.Chrome(service=s)
 
+    # load webpage and get to inspection page
+    load_page_and_sign_in(url, username, password, global_driver)
+
+    # continue search until inspection is available, alert when found
+    continue_searching = True
+    repetitions = 0
+    while continue_searching:
+        if inspection_available(global_driver, inspection_date, type_of_inspection):
+            play_alert()
+            print("Inspection found on date inputted!")
+            play_alert()
+            time.sleep(10)
+            continue_searching = False
+        else:
+            repetitions += 1
+            print("Still searching!", "Number of times searched:", repetitions)
+            print("-----------------")
+            refresh_page(2, global_driver)
+
+
+if __name__ == '__main__':
+    print('~~~~~~~~~~~~~~~~~~~~~~~')
     # get all necessary info from user input
     url = 'https://sjpermits.org/permits/general/scheduleinspection.asp'
     username = input("Enter the permit number: ")
@@ -104,22 +133,5 @@ def main():
     print("Alarm will sound if inspection is available.")
     print('-----------------------')
 
-    # define driver (global)
-    global_driver = webdriver.Chrome(service=s)
-
-    # load webpage and get to inspection page
-    load_page_and_sign_in(url, username, password, global_driver)
-
-    continue_searching = True
-    while continue_searching:
-        if inspection_available(global_driver, inspection_date, type_of_inspection):
-            print("Inspection found on date inputted!")
-            continue_searching = False
-        else:
-            print("Still searching!")
-            print("-----------------")
-            refresh_page(2, global_driver)
-
-
-if __name__ == '__main__':
+    # run search
     main()
