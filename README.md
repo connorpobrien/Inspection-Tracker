@@ -15,7 +15,7 @@ Technologies used: Selenium, Beautiful Soup, and Pygame libraries.
 **Pygame** is a python module that is designed for writing video games. For this project, Pygame is used simply to play a .mov file. This alerts the user when the inspection is available.
 
 
-## How to install and run
+## How to Install and Run
 
 
 ## Visuals
