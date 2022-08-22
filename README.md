@@ -22,15 +22,15 @@ This program is designed to run on mac os with the chrome browser
 - Install selenium, BeautifulSoup, and Pygame through IDE or console.
 
 ```bash
-pip install selenium
+>>> pip install selenium
 ```
 
 ```bash
-pip install beautifulsoup4
+>>> pip install beautifulsoup4
 ```
 
 ```bash
-pip install pygame
+>>> pip install pygame
 ```
 
 
