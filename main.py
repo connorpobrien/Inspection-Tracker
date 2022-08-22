@@ -128,7 +128,8 @@ if __name__ == '__main__':
     print('-----------------------')
     inspection_date = input("Enter the date of the permit that you are waiting for (Ex: 09/10/2022): ")
     print('-----------------------')
-    print("Alarm will sound if inspection is available.")
+    print("Launching chrome browser...")
+    print("Alarm will sound if designated inspection available.")
     print('-----------------------')
 
     # run search
