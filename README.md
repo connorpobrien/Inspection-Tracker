@@ -25,3 +25,4 @@ Technologies used: Selenium, Beautiful Soup, and Pygame libraries.
 - no validation of user inputs
 - better data structures
 - only works for one use
+- notification instead of alarm
