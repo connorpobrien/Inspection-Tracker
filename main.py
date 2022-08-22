@@ -16,11 +16,10 @@ s = Service('/usr/local/bin/chromedriver')
 
 def load_page_and_sign_in(page_url, login_1, login_2, driver):
     """
-    Loads SJ building department website and signs in to inspection page
+    Loads SJ building department website using driver and signs in to inspection page
     :param page_url: url of website
     :param login_1: login phrase for 1st sign in page
     :param login_2: login phrase for 2nd sign in page
-    :return: loads inspection webpage using selenium and logs in
     """
     # load website
     driver.get(page_url)
@@ -48,11 +47,11 @@ def load_page_and_sign_in(page_url, login_1, login_2, driver):
     search_button.click()
 
 
-def refresh_page(seconds, driver):
+def refresh_page(driver, seconds):
     """
-    :param driver: driver from 'load_page' function
+    Uses selenium to reload chrome page in driver
+    :param driver: chrome driver 
     :param seconds: how often to reload page -> int
-    :return: uses selenium to reload designated chrome page
     """
     time.sleep(seconds)
     driver.refresh()
@@ -60,10 +59,10 @@ def refresh_page(seconds, driver):
 
 def inspection_available(driver, inspection_date, type_of_inspection):
     """
-    :param driver:
-    :param inspection_date:
-    :param type_of_inspection:
-    :return:
+    :param driver: chrome driver
+    :param inspection_date: date of desired inspection (Format == month/day/year , Example: 09/10/2022) -> str
+    :param type_of_inspection: Inspection discipline (Building, Electrical, etc.) -> str
+    :return: True if designated inspection is available, otherwise False
     """
 
     # retrieve html of whole page
@@ -87,7 +86,7 @@ def inspection_available(driver, inspection_date, type_of_inspection):
 
 def play_alert():
     """
-    Plays sound from computer speakers
+    Uses pygame to play an audible alert 
     """
     mixer.init()
     sound = mixer.Sound("mixkit-classic-alarm-995.wav")
@@ -135,3 +134,5 @@ if __name__ == '__main__':
 
     # run search
     main()
+    
+    print('~~~~~~~~~~~~~~~~~~~~~~~')
