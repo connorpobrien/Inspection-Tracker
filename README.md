@@ -20,6 +20,7 @@ This program is designed to run on mac os with the chrome browser
 
 - Download chrome driver and store in correct folder -> insert link
 - Install selenium, BeautifulSoup, and Pygame through IDE or console.
+
 '''bash
 pip install selenium
 '''
