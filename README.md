@@ -19,3 +19,9 @@ Technologies used: Selenium, Beautiful Soup, and Pygame libraries.
 
 
 ## Visuals
+
+## Potential Improvements
+
+- no validation of user inputs
+- better data structures
+- only works for one use
