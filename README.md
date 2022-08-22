@@ -25,6 +25,14 @@ This program is designed to run on mac os with the chrome browser
 pip install selenium
 ```
 
+```bash
+pip install beautifulsoup4
+```
+
+```bash
+pip install pygame
+```
+
 
 ## Visuals
 
