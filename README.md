@@ -8,18 +8,18 @@ This project was created to automatically monitor the San Jose building departme
 ## How it works
 Technologies used: Selenium, Beautiful Soup, and Pygame libraries. 
 
-**Selenium** is a free, open source tool that is used to automate browsers. For this project, Selenium was used to launch a chrome browser and automate the sign in process for the San Jose building department website. This helps set user login credentials and enables continuous searching.
+**Selenium** is an open source tool that is used to automate browsers. For this project, Selenium was used to launch a chrome browser and automate the sign in process for the San Jose building department website. This helps set user login credentials and enables continuous searching without user intervention.
 
-**Beautiful Soup** is a python library that is used to pull data out of HTML and XML files. For this project, Beautiful Soup was used to extract the HTML content of the inspection page and enables the user to search for a specific date and discipline of inspection. 
+**Beautiful Soup** is a python library that is used to pull data out of HTML and XML files. For this project, Beautiful Soup was used to extract the HTML content of the inspection page and enables the program to search for a specific date and discipline of inspection based on user input. 
 
-**Pygame** is a python module that is designed for writing video games. For this project, Pygame is used simply to play a .mov file. This alerts the user when the inspection is available.
+**Pygame** is a python module that is designed for writing video games. For this project, Pygame was used simply to play a .mov file. This alerts the user when the inspection is available.
 
 
 ## How to Install and Run
 This program is designed to run on mac os with the chrome browser
 
-- Download chrome driver and store in correct folder -> insert link
-- Install selenium, BeautifulSoup, and Pygame through IDE or console.
+1. Download chrome driver and store in correct folder -> [tutorial](https://www.youtube.com/watch?v=pyqz8X7UUDs).
+2. Install Selenium, BeautifulSoup, and Pygame through IDE or console.
 
 ```bash
 >>> pip install selenium
@@ -33,6 +33,8 @@ This program is designed to run on mac os with the chrome browser
 >>> pip install pygame
 ```
 
+3. Run program and complete user inputs.
+4. Wait for program to alert that an inspection is available. 
 
 ## Visuals
 
