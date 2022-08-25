@@ -107,7 +107,7 @@ def main():
     while continue_searching:
         if inspection_available(global_driver, inspection_date, type_of_inspection):
             play_alert()
-            print("Inspection available!")
+            print("Inspection found on date inputted!")
             play_alert()
             time.sleep(10)
             continue_searching = False
