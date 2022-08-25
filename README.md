@@ -1,4 +1,4 @@
-# Reload-Notify-Program
+# Inspection-Tracker
 
 ## Purpose
 This project was created to automatically monitor the San Jose building department website to check for available inspection appointments. 
