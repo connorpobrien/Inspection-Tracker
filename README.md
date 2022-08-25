@@ -54,6 +54,7 @@ Output during search (automatically reloads page every 2 seconds):
 ## Potential Improvements
 
 1. Validate correct user inputs before launching seach. 
-2. Notify user via email or text when inspection is available instead of alarm
+2. Notify user via email or text when inspection is available instead of alarm.
+3. Include option to run seach in background without visually launching chrome browser. 
 
 Note: The most important factor when writing this program was time. It was crucial that the program was operating as quickly as possible so that the inspections could be booked. 
