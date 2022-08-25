@@ -3,7 +3,7 @@
 ## Purpose
 This project was created to automatically monitor the San Jose building department website to check for available inspection appointments. 
 
-**Use of this program helped decrease the total schedule duration by 3-4 weeks for a $50M private construction project.** A missing electrical inspection was blocking work from continuing on the project, causing serious cost and schedule problems. This program automatically notified the team when sooner inspections were available due to cancellations.
+**Use of this program helped decrease the total schedule duration by 3-4 weeks for a $55M commercial construction project.** A missing electrical inspection was blocking work from continuing on the project, causing serious cost and schedule problems. This program automatically notified the team when sooner inspections were available due to cancellations. 
 
 ## How it works
 Technologies used: Selenium, Beautiful Soup, and Pygame libraries. 
@@ -36,11 +36,24 @@ This program is designed to run on mac os with the chrome browser
 3. Run program and complete user inputs.
 4. Wait for program to alert that an inspection is available. 
 
-## Visuals
+## Visuals (Specifics covered for privacy)
+
+Inspection website:
+
+![](images/inspections.png)
+
+Ouput when designated inspection is available:
+
+![](images/available.png)
+
+Output during search (automatically reloads page every 2 seconds):
+
+![](images/searching.png)
+
 
 ## Potential Improvements
 
-- no validation of user inputs
-- better data structures
-- only works for one use
-- notification instead of alarm
+1. Validate correct user inputs before launching seach. 
+2. Notify user via email or text when inspection is available instead of alarm
+
+Note: The most important factor when writing this program was time. It was crucial that the program was operating as quickly as possible so that the inspections could be booked. 
